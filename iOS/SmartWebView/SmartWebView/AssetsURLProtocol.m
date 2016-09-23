@@ -1,0 +1,62 @@
+//
+//  AssetsURLProtocol.m
+//  SmartWebView
+//
+//  Created by Essam on 9/22/16.
+//  Copyright © 2016 Essam. All rights reserved.
+//
+
+#import "AssetsURLProtocol.h"
+#import "ConfigManager.h"
+
+@implementation AssetsURLProtocol
+
++ (BOOL)canInitWithRequest:(NSURLRequest *)request {
+    NSLog(@"%@", request);
+
+    return [self mimeTypeForExtension:request.URL.path.pathExtension] && [self localWebsiteAssetPathForRequest:request];
+}
+
++ (NSURLRequest*)canonicalRequestForRequest:(NSURLRequest*)request {
+    return request;
+}
+
+- (void)startLoading {
+    NSLog(@"START LOADING %@", self.request);
+
+    NSString *assetPath = [self.class localWebsiteAssetPathForRequest:self.request];
+    NSData *data = [NSData dataWithContentsOfFile:assetPath];
+
+    NSURLResponse *response = [[NSURLResponse alloc] initWithURL:self.request.URL
+                                                        MIMEType:[self.class mimeTypeForExtension:self.request.URL.path.pathExtension]
+                                           expectedContentLength:data.length
+                                                textEncodingName:nil];
+
+    [[self client] URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+    [[self client] URLProtocol:self didLoadData:data];
+    [[self client] URLProtocolDidFinishLoading:self];
+}
+
+- (void)stopLoading {
+    NSLog(@"STOP LOADING %@", self.request);
+}
+
++ (NSString *)localWebsiteAssetPathForRequest:(NSURLRequest *)request {
+    return [[NSBundle mainBundle] pathForResource:[[@"Assets" stringByAppendingString:request.URL.path] stringByDeletingPathExtension] ofType:request.URL.path.pathExtension];
+}
+
++ (NSString *)mimeTypeForExtension:(NSString *)extension {
+    if ([@[@"png", @"jpg", @"jpeg", @"gif"] containsObject:extension]) {
+        return [@"image/" stringByAppendingString:extension];
+    } else if ([@[@"svg"] containsObject:extension]) {
+        return [@"image/" stringByAppendingString:@"svg+xml"];
+    } else if ([@[@"css"] containsObject:extension]) {
+        return @"text/css";
+    } else if ([@[@"js"] containsObject:extension]) {
+        return @"text/javascript";
+    } else {
+        return nil;
+    }
+}
+
+@end
