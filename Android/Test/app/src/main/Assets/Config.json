@@ -1,4 +1,10 @@
 {
-  "appName":"test",
-  "websiteURL":"http://bis-88motors.pagekite.me/test2/"
+  "appName": "test",
+  "websiteURL": "http://bis-88motors.pagekite.me/test2/",
+  "appId": "com.test.test",
+  "versionName": "2.5.6",
+  "versionCode": "123",
+  "ShortVersionString": "7.7",
+  "bundleVersion": "222",
+  "splash_color":"#00ccdd22"
 }

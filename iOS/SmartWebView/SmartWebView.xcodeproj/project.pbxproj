@@ -16,7 +16,6 @@
 		CEFAA8FC1D950DD100970CF2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFAA8F91D950DD100970CF2 /* main.m */; };
 		CEFAA9011D950DDA00970CF2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEFAA8FD1D950DDA00970CF2 /* LaunchScreen.storyboard */; };
 		CEFAA9021D950DDA00970CF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEFAA8FF1D950DDA00970CF2 /* Main.storyboard */; };
-		CEFAA9051D95269E00970CF2 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = CEFAA9041D95269E00970CF2 /* config.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +34,6 @@
 		CEFAA8F91D950DD100970CF2 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SmartWebView/main.m; sourceTree = SOURCE_ROOT; };
 		CEFAA8FE1D950DDA00970CF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = SmartWebView/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
 		CEFAA9001D950DDA00970CF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = SmartWebView/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
-		CEFAA9041D95269E00970CF2 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = config.json; path = SmartWebView/config.json; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +84,6 @@
 			children = (
 				CEFAA8F91D950DD100970CF2 /* main.m */,
 				CEFAA8F81D950DD100970CF2 /* Info.plist */,
-				CEFAA9041D95269E00970CF2 /* config.json */,
 				CEFAA8F71D950DD100970CF2 /* Assets.xcassets */,
 				CEFAA8F51D950DB500970CF2 /* Assets */,
 				CEFAA8FD1D950DDA00970CF2 /* LaunchScreen.storyboard */,
@@ -121,7 +118,7 @@
 		CEAA924D1D93BBB500E4D27F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Essam;
 				TargetAttributes = {
 					CEAA92541D93BBB500E4D27F = {
@@ -154,7 +151,6 @@
 			files = (
 				CEFAA8FA1D950DD100970CF2 /* Assets.xcassets in Resources */,
 				CEFAA9021D950DDA00970CF2 /* Main.storyboard in Resources */,
-				CEFAA9051D95269E00970CF2 /* config.json in Resources */,
 				CEFAA9011D950DDA00970CF2 /* LaunchScreen.storyboard in Resources */,
 				CEFAA8F61D950DB500970CF2 /* Assets in Resources */,
 			);
@@ -210,8 +206,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -253,8 +251,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
