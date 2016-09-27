@@ -10,6 +10,7 @@ appId=json['appId']
 appName=json['appName']
 versionCode=json['versionCode']
 versionName=json['versionName']
+color=json["splash_color"]
 #Building Android Project
 FileUtils.copy_entry('Data/Assets', 'Output/Test/app/src/main/Assets', preserve = false, dereference_root = false, remove_destination = true)
 FileUtils.copy_entry('Data/android_icon', 'Output/Test/app/src/main/res', preserve = false, dereference_root = false, remove_destination = true)
@@ -46,9 +47,21 @@ end
 File.open(path, 'w') do |file|
   file.puts lines
 end
+path = 'Output/Test/app/src/main/res/values/colors.xml'
+lines = IO.readlines(path).map do |line|
+  if line.include? "splash_color"
+  "<color name=\"splash_color\">#{color}</color>"     
+  else
+    line
+  end
 
+end
+File.open(path, 'w') do |file|
+  file.puts lines
+end
 #Building iOS Project
-
+a = ( color.match /#(..?)(..?)(..?)/ )[1..3]
+  a.map!{ |x| x + x } if color.size == 4
 FileUtils.copy_entry('Data/Assets', 'Output/SmartWebView/SmartWebView/Assets', preserve = false, dereference_root = false, remove_destination = true)
 FileUtils.copy_entry('Data/ios_icon', 'Output/SmartWebView/SmartWebView/Assets.xcassets/AppIcon.appiconset', preserve = false, dereference_root = false, remove_destination = true)
 FileUtils.copy_entry('Data/ios_splash', 'Output/SmartWebView/SmartWebView/Assets.xcassets/launch-icon.imageset', preserve = false, dereference_root = false, remove_destination = true)
@@ -67,12 +80,13 @@ File.open("Output/SmartWebView/SmartWebView.xcodeproj/project.pbxproj", 'w') do 
 end
 
 lines = IO.readlines("Output/SmartWebView/SmartWebView/Base.lproj/LaunchScreen.storyboard").map do |line|
-  line.gsub("red='0.11'", " red=0.12").gsub("green='0.22'"," green=0.33").gsub("blue='0.33'"," blue=0.44")
+  line.gsub("red='0.11'", "red=#{a[0].hex/255}")
+  line.gsub("green='0.22'", "green=#{a[1].hex/255}")
+  line.gsub("blue='0.33'", "blue=#{a[2].hex/255}")
 end
 File.open("Output/SmartWebView/SmartWebView/Base.lproj/LaunchScreen.storyboard", 'w') do |file|
   file.puts lines
 end
-
 
 
 
