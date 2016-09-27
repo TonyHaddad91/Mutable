@@ -80,9 +80,10 @@ File.open("Output/SmartWebView/SmartWebView.xcodeproj/project.pbxproj", 'w') do 
 end
 
 lines = IO.readlines("Output/SmartWebView/SmartWebView/Base.lproj/LaunchScreen.storyboard").map do |line|
-  line.gsub("red='0.11'", "red=#{a[0].hex/255}")
-  line.gsub("green='0.22'", "green=#{a[1].hex/255}")
-  line.gsub("blue='0.33'", "blue=#{a[2].hex/255}")
+  line.gsub!("red=\"0.11\"", "red=\"#{a[0].hex/255.0}\"")
+  line.gsub!("green=\"0.22\"", "green=\"#{a[1].hex/255.0}\"")
+  line.gsub!("blue=\"0.33\"", "blue=\"#{a[2].hex/255.0}\"")
+  line
 end
 File.open("Output/SmartWebView/SmartWebView/Base.lproj/LaunchScreen.storyboard", 'w') do |file|
   file.puts lines
