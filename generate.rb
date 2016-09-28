@@ -38,9 +38,7 @@ end
 
 path = 'Output/Android/app/src/main/AndroidManifest.xml'
 lines = IO.readlines(path).map do |line|
-  if line.include? 'package='
-    "package= \"#{app_id}\""
-	elsif line.include? 'android:label='
+  if line.include? 'android:label='
 	  "android:label=\"#{app_name}\""
   else
   	line
