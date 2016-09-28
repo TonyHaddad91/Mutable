@@ -1,11 +1,15 @@
 require 'fileutils'
 require 'json'
 
+puts 'Cleaning up old outputs...'
+
 # Clean up
 FileUtils.remove_dir('Output', true)
 FileUtils.mkdir('Output')
 FileUtils.copy_entry('Android', 'Output/Android', false, false, false)
 FileUtils.copy_entry('iOS', 'Output/iOS', false, false, false)
+
+puts 'Reading config from Input/Assets/config.json'
 
 # Read config
 json = JSON.parse(File.read('Input/Assets/config.json'))
@@ -14,6 +18,8 @@ app_name      = json['appName']
 version_code  = json['versionCode']
 version_name  = json['versionName']
 splash_color  = json['splashColor']
+
+puts 'Generating Android project in Output/Android'
 
 # Generate Android project
 FileUtils.copy_entry('Input/Assets', 'Output/Android/app/src/main/Assets', false, false, true)
@@ -60,6 +66,8 @@ File.open(path, 'w') do |file|
   file.puts lines
 end
 
+puts 'Generating iOS project in Output/iOS'
+
 # Generate iOS project
 FileUtils.copy_entry('Input/Assets', 'Output/iOS/SmartWebView/SmartWebView/Assets', false, false, true)
 FileUtils.copy_entry('Input/ios_icon', 'Output/iOS/SmartWebView/SmartWebView/Assets.xcassets/AppIcon.appiconset', false, false, true)
@@ -89,3 +97,5 @@ end
 File.open('Output/iOS/SmartWebView/SmartWebView/Base.lproj/LaunchScreen.storyboard', 'w') do |file|
   file.puts lines
 end
+
+puts 'DONE'
