@@ -1,95 +1,93 @@
 require 'fileutils'
 require 'json'
 
-FileUtils.remove_dir('Output',force=true)
-FileUtils.mkdir 'Output'
-FileUtils.copy_entry('Android', 'Output', preserve = false, dereference_root = false, remove_destination = false)
-FileUtils.copy_entry('iOS', 'Output', preserve = false, dereference_root = false, remove_destination = false)
-json = JSON.parse(File.read('Data/Assets/config.json'))
-appId=json['appId']
-appName=json['appName']
-versionCode=json['versionCode']
-versionName=json['versionName']
-color=json["splash_color"]
-#Building Android Project
-FileUtils.copy_entry('Data/Assets', 'Output/Test/app/src/main/Assets', preserve = false, dereference_root = false, remove_destination = true)
-FileUtils.copy_entry('Data/android_icon', 'Output/Test/app/src/main/res', preserve = false, dereference_root = false, remove_destination = true)
-FileUtils.copy_entry('Data/android_splash', 'Output/Test/app/src/main/res/', preserve = false, dereference_root = false, remove_destination =false)
+# Clean up
+FileUtils.remove_dir('Output', true)
+FileUtils.mkdir('Output')
+FileUtils.copy_entry('Android', 'Output/Android', false, false, false)
+FileUtils.copy_entry('iOS', 'Output/iOS', false, false, false)
 
-path = 'Output/Test/app/build.gradle'
+# Read config
+json = JSON.parse(File.read('Input/Assets/config.json'))
+app_id        = json['appId']
+app_name      = json['appName']
+version_code  = json['versionCode']
+version_name  = json['versionName']
+splash_color  = json['splashColor']
+
+# Generate Android project
+FileUtils.copy_entry('Input/Assets', 'Output/Android/app/src/main/Assets', false, false, true)
+FileUtils.copy_entry('Input/android_icon', 'Output/Android/app/src/main/res', false, false, true)
+FileUtils.copy_entry('Input/android_splash', 'Output/Android/app/src/main/res/', false, false, false)
+
+path = 'Output/Android/app/build.gradle'
 lines = IO.readlines(path).map do |line|
-  if line.include? "applicationId"
-	"applicationId \"#{appId}\""
- elsif line.include? "versionCode"
-    "versionCode #{versionCode}"
- elsif line.include? "versionName"
-    "versionName \"#{versionName}\""	   
+  if line.include? 'applicationId'
+    "applicationId \"#{app_id}\""
+  elsif line.include? 'versionCode'
+    "versionCode #{version_code}"
+  elsif line.include? 'versionName'
+    "versionName \"#{version_name}\""
   else
   	line
   end
-
 end
 File.open(path, 'w') do |file|
-  file.puts lines
+  file.puts(lines)
 end
 
-path = 'Output/Test/app/src/main/AndroidManifest.xml'
+path = 'Output/Android/app/src/main/AndroidManifest.xml'
 lines = IO.readlines(path).map do |line|
-  if line.include? "package="
-	"package= \"#{appId}\""	 
-	elsif line.include? "android:label="
-	  "android:label=\"#{appName}\""	  
+  if line.include? 'package='
+    "package= \"#{app_id}\""
+	elsif line.include? 'android:label='
+	  "android:label=\"#{app_name}\""
   else
   	line
   end
-
 end
 File.open(path, 'w') do |file|
   file.puts lines
 end
-path = 'Output/Test/app/src/main/res/values/colors.xml'
+
+path = 'Output/Android/app/src/main/res/values/colors.xml'
 lines = IO.readlines(path).map do |line|
-  if line.include? "splash_color"
-  "<color name=\"splash_color\">#{color}</color>"     
-  else
-    line
-  end
-
-end
-File.open(path, 'w') do |file|
-  file.puts lines
-end
-#Building iOS Project
-a = ( color.match /#(..?)(..?)(..?)/ )[1..3]
-  a.map!{ |x| x + x } if color.size == 4
-FileUtils.copy_entry('Data/Assets', 'Output/SmartWebView/SmartWebView/Assets', preserve = false, dereference_root = false, remove_destination = true)
-FileUtils.copy_entry('Data/ios_icon', 'Output/SmartWebView/SmartWebView/Assets.xcassets/AppIcon.appiconset', preserve = false, dereference_root = false, remove_destination = true)
-FileUtils.copy_entry('Data/ios_splash', 'Output/SmartWebView/SmartWebView/Assets.xcassets/launch-icon.imageset', preserve = false, dereference_root = false, remove_destination = true)
-
-lines = IO.readlines("Output/SmartWebView/SmartWebView.xcodeproj/project.pbxproj").map do |line|
-  if line.include? "PRODUCT_BUNDLE_IDENTIFIER"
-  "PRODUCT_BUNDLE_IDENTIFIER =#{appId};"
-elsif line.include?"PRODUCT_NAME"
-    "PRODUCT_NAME=#{appName};"
+  if line.include? 'splash_color'
+    "<color name=\"splash_color\">#{splash_color}</color>"
   else
     line
   end
 end
-File.open("Output/SmartWebView/SmartWebView.xcodeproj/project.pbxproj", 'w') do |file|
+File.open(path, 'w') do |file|
   file.puts lines
 end
 
-lines = IO.readlines("Output/SmartWebView/SmartWebView/Base.lproj/LaunchScreen.storyboard").map do |line|
-  line.gsub!("red=\"0.11\"", "red=\"#{a[0].hex/255.0}\"")
-  line.gsub!("green=\"0.22\"", "green=\"#{a[1].hex/255.0}\"")
-  line.gsub!("blue=\"0.33\"", "blue=\"#{a[2].hex/255.0}\"")
+# Generate iOS project
+FileUtils.copy_entry('Input/Assets', 'Output/iOS/SmartWebView/SmartWebView/Assets', false, false, true)
+FileUtils.copy_entry('Input/ios_icon', 'Output/iOS/SmartWebView/SmartWebView/Assets.xcassets/AppIcon.appiconset', false, false, true)
+FileUtils.copy_entry('Input/ios_splash', 'Output/iOS/SmartWebView/SmartWebView/Assets.xcassets/launch-icon.imageset', false, false, true)
+
+lines = IO.readlines('Output/iOS/SmartWebView/SmartWebView.xcodeproj/project.pbxproj').map do |line|
+  if line.include? 'PRODUCT_BUNDLE_IDENTIFIER'
+    "PRODUCT_BUNDLE_IDENTIFIER =#{app_id};"
+  elsif line.include? 'PRODUCT_NAME'
+    "PRODUCT_NAME=#{app_name};"
+  else
+    line
+  end
+end
+File.open('Output/iOS/SmartWebView/SmartWebView.xcodeproj/project.pbxproj', 'w') do |file|
+  file.puts lines
+end
+
+rgb_splash_color = (splash_color.match(/#(..?)(..?)(..?)/))[1..3]
+rgb_splash_color!.map { |x| x + x } if splash_color.size == 4
+lines = IO.readlines('Output/iOS/SmartWebView/SmartWebView/Base.lproj/LaunchScreen.storyboard').map do |line|
+  line.gsub!("red=\"0.11\"", "red=\"#{rgb_splash_color[0].hex / 255.0}\"")
+  line.gsub!("green=\"0.22\"", "green=\"#{rgb_splash_color[1].hex / 255.0}\"")
+  line.gsub!("blue=\"0.33\"", "blue=\"#{rgb_splash_color[2].hex / 255.0}\"")
   line
 end
-File.open("Output/SmartWebView/SmartWebView/Base.lproj/LaunchScreen.storyboard", 'w') do |file|
+File.open('Output/iOS/SmartWebView/SmartWebView/Base.lproj/LaunchScreen.storyboard', 'w') do |file|
   file.puts lines
 end
-
-
-
-
-

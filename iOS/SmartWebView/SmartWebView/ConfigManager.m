@@ -26,7 +26,7 @@
 
 -(instancetype)init {
     if (self = [super init]) {
-        NSString *configString = [[NSString alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Assets/config" ofType:@"json"] encoding:NSUTF8StringEncoding error:nil];
+        NSString *configString = [[NSString alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Assets/Config" ofType:@"json"] encoding:NSUTF8StringEncoding error:nil];
         self.config = [NSJSONSerialization JSONObjectWithData:[configString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
     }
 
