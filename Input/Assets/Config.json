@@ -1,8 +1,8 @@
 {
-  "appName": "Google",
-  "websiteURL": "https://www.google.com",
-  "appId": "com.test.google",
-  "versionName": "2.5.6",
-  "versionCode": "123",
-  "splashColor":"#ccdd22"
+  "appName": "Saeed's Floppy Bird",
+  "websiteURL": "http://88gadgets.net/test2/flappy.test.html",
+  "appId": "com.myFlappy.cyrus",
+  "versionName": "0.0.1",
+  "versionCode": "100",
+  "splashColor":"#71c5cf"
 }
