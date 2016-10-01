@@ -1,6 +1,13 @@
 var wiwi = window.innerWidth;
 var hehe = window.innerHeight;
 
+var imgPipe = new Image();
+imgPipe.src = '/test2/assets/pipe.png';
+imgPipe.onload = function() {
+	pipeHeight = imgPipe.height;
+};
+
+
 var game=new Phaser.Game( wiwi, hehe,Phaser.AUTO,"gameDiv");
 var mainState={
 	preload:function(){
@@ -53,8 +60,8 @@ hitPipe:function(){
 },
 restartGame:function(){
 	game.state.start('main');
-}
-,addOnePipe:function(x,y){
+},
+addOnePipe:function(x,y){
 	var pipe=game.add.sprite(x,y,'pipe');
 	this.pipes.add(pipe);
 	game.physics.arcade.enable(pipe);
@@ -64,7 +71,12 @@ restartGame:function(){
 },
 addRowOfPipes:function(){
 	var hole=Math.floor(Math.random()*5)+1;
-	for(var i=0;i<8;i++)if(i!=hole&&i!=hole+1)this.addOnePipe(wiwi,i*Math.floor(hehe/8)+10);this.score+=1;this.labelScore.text=this.score;},};
+	var maxPipes = Math.floor(hehe/pipeHeight);
+	for(var i=0;i<maxPipes;i++)
+		if(i!=hole&&i!=hole+1&&i!=hole-1)this.addOnePipe(wiwi,i*Math.floor(hehe/maxPipes)+10);
+	this.score+=1;this.labelScore.text=this.score;
+	},
+};
 
 
 game.state.add('main',mainState);
