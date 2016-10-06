@@ -123,6 +123,7 @@
 				TargetAttributes = {
 					CEAA92541D93BBB500E4D27F = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = XJJ4ZLXM9J;
 					};
 				};
 			};
@@ -281,6 +282,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = XJJ4ZLXM9J;
 				INFOPLIST_FILE = SmartWebView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -294,6 +296,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = XJJ4ZLXM9J;
 				INFOPLIST_FILE = SmartWebView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
