@@ -111,6 +111,7 @@ function startMyGame(difficulty) {
 		if(this.bird.x < 100)this.bird.x += 5;
 		if(this.labelScore.x < 20)this.labelScore.x += 1;
 		this.addOneSmoke(this.bird.x - 5,this.bird.y - 4);
+		this.smokes.forEach(function(p){if (p.x < -20) { p.destroy(); }},this);
 		
 	},
 	jump:function(){
@@ -159,10 +160,12 @@ function startMyGame(difficulty) {
 		coin.outOfBoundsKill=true;
 	},
 	addOneCloud:function(x,y) {
+		
 		var cloud=game.add.sprite(x,y,'cloud');
 		this.clouds.add(cloud);
+		console.log(x);
 		game.physics.arcade.enable(cloud);
-		cloud.body.velocity.x=-120 + ((Math.random() - Math.random()) * 100);
+		cloud.body.velocity.x=-140 + ((Math.random() - Math.random()) * 100);
 		cloud.checkWorldBounds=true;
 		cloud.outOfBoundsKill=true;
 	},
@@ -194,7 +197,7 @@ function startMyGame(difficulty) {
 		this.score+=1;
 		this.labelScore.text=this.score;
 		if (Math.random() > 0.5) {
-			this.addOneCloud(wiwi + 10, Math.round(Math.random() * hehe));
+			this.addOneCloud(wiwi, Math.round(Math.random() * hehe));
 		};
 	},
 		
